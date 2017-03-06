@@ -1,0 +1,6 @@
+---
+# Here are variables related to the Tomcat installation
+
+ajp_port: 8009
+http_port: 80
+https_port: 443

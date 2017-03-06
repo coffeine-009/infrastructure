@@ -1,0 +1,11 @@
+---
+# Base software for each node
+
+# Configure users
+- include: users.yml
+
+#- Install base tools -#
+- include: base.yml
+
+#- Install GIT -#
+- include: git.yml

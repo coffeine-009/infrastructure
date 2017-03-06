@@ -1,0 +1,17 @@
+---
+# Install and configure lisb for application
+
+- name: Add nodejs repos
+  action: shell curl --silent --location https://rpm.nodesource.com/setup_5.x | bash -
+
+- name: Install Node.js
+  yum: name={{ item }} state=present
+  with_items:
+    - nodejs
+
+- name: Check if npm, grunt and bower are installed
+  npm: name={{ item }} state=present global=true
+  with_items:
+    - npm
+    - bower
+    - webpack

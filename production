@@ -1,0 +1,8 @@
+[main-servers]
+www.musician-virtuoso.com
+
+[db-servers]
+www.musician-virtuoso.com
+
+[music-servers]
+www.musician-virtuoso.com

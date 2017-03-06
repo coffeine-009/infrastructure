@@ -1,0 +1,8 @@
+[main-servers]
+192.168.3.9
+
+[db-servers]
+192.168.3.9
+
+[music-servers]
+192.168.3.9

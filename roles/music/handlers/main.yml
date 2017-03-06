@@ -1,0 +1,8 @@
+---
+#- Restart web server[Tomcat] -#
+- name: restart tomcat
+  service: name=tomcat state=restarted
+
+#- Restart iptables -#
+- name: restart iptables
+  service: name=iptables state=restarted

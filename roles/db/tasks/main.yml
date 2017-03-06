@@ -1,0 +1,5 @@
+---
+# Database software for each node
+
+#- Install PostgreSQL database server -#
+- include: postgres.yml

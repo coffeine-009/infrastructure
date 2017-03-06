@@ -1,0 +1,20 @@
+---
+# Install and configure web-server[Apache]
+
+- name: Install Web-Server
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd
+    - mod_ssl
+
+- name: Configure web-server
+  template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+  notify: restart httpd
+
+- name: Open web-server port[iptables]
+  iptables: chain=INPUT protocol=tcp match=tcp destination_port=80 ctstate=NEW jump=ACCEPT
+  notify: restart iptables
+
+#- Configure running web-server -#
+- name: Web-Service state
+  service: name=httpd state=started enabled=yes

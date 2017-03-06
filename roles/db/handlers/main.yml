@@ -1,0 +1,5 @@
+---
+# Handlers for restarting database server
+
+- name: restart database-server
+  service: name=postgresql state=restarted

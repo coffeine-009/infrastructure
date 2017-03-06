@@ -1,0 +1,14 @@
+---
+# Prepare back-end server #
+
+#- Install java, JRE -#
+- include: java.yml
+
+#- Install web server -#
+- include: tomcat.yml
+
+#- Install app's dependencies -#
+- include: app-tools.yml
+
+#- Deploy application -#
+- include: deploy.yml

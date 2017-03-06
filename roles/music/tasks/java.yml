@@ -1,0 +1,9 @@
+---
+# Install JRE
+
+- name: Install java, JRE
+  yum: name={{ item }} state=present
+  with_items:
+    - java-1.8.0-openjdk
+  environment:
+    JAVA_HOME: /usr/lib/jvm/jre

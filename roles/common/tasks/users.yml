@@ -1,0 +1,5 @@
+---
+# Configure users
+
+#- name: Configure users
+#  template: src= dest=/etc/sudoers

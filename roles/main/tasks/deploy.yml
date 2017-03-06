@@ -1,0 +1,32 @@
+---
+# Install and configure application[front-end]
+
+- name: Add GIT repository to known_hosts
+  known_hosts: path=~/.ssh/known_hosts name='bitbucket.org' key="{{ lookup('pipe', 'ssh-keyscan -t rsa bitbucket.org') }}"
+  sudo: yes
+  sudo_user: vitaliy.tsutsman
+
+- name: Copy src of application
+  git: repo={{ repository }} dest=/var/www/html
+  sudo: yes
+  sudo_user: vitaliy.tsutsman
+
+- name: Install application's tools, bower
+  npm: name=bower global=yes
+
+- name: Install application's tools
+  npm: path=/var/www/html production=yes
+  sudo: yes
+  sudo_user: vitaliy.tsutsman
+
+- name: Install application's libs
+  bower: path=/var/www/html
+  sudo: yes
+  sudo_user: vitaliy.tsutsman
+
+- name: Run application's tasks
+  action: shell grunt
+  args:
+      chdir: /var/www/html
+  sudo: yes
+  sudo_user: vitaliy.tsutsman

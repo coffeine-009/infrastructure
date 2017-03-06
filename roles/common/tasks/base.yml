@@ -1,0 +1,9 @@
+---
+# Install and configure base tools for administration
+
+- name: Install base tools
+  yum: name={{ item }} state=present
+  with_items:
+    - wget
+    - curl
+    - sudo

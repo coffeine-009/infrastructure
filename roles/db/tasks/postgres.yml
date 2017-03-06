@@ -1,0 +1,49 @@
+---
+# Install and configure database server(PostgreSQL)
+
+- name: Install PostgeSQL
+  yum: name={{ item }} state=present
+  with_items:
+    - postgresql-server
+    - postgresql-contrib
+    - python-psycopg2
+
+# Prepare database-server
+- name: Prepare database server
+  shell: postgresql-setup initdb
+  args:
+    creates: /var/lib/pgsql/data
+
+# Configure
+- name: Create PostgreSQL configuration file
+  template: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf
+  notify:
+  - restart database-server
+
+#- Restart database-server -#
+- name: Database-Service restart
+  service: name=postgresql state=restarted
+
+# Create user and set/check privileges
+- name: Ensure user has access to database
+  postgresql_user: db={{ db_name }} name={{ db_username }} password={{ db_password }} priv=ALL
+  become_method: sudo
+  become_user: postgres
+
+- name: Ensure user does not have unnecessary privilege
+  postgresql_user: name={{ db_username }} role_attr_flags=NOSUPERUSER,NOCREATEDB
+  become_method: sudo
+  become_user: postgres
+
+# Create database
+- name: Ensure database is created
+  postgresql_db: name={{ db_name }} owner={{ db_username }}
+  become_user: postgres
+
+- name: Open db port[iptables]
+  iptables: chain=INPUT protocol=tcp match=tcp destination_port=5432 ctstate=NEW jump=ACCEPT
+  notify: restart iptables
+
+#- Configure running database-server -#
+- name: Database-Service state
+  service: name=postgresql state=started enabled=yes

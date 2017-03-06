@@ -1,0 +1,45 @@
+---
+# Install and configure web-server[Tomcat]
+
+- name: Add group "tomcat"
+  group: name=tomcat
+
+- name: Add user "tomcat"
+  user: name=tomcat group=tomcat home=/usr/share/tomcat createhome=no
+  sudo: True
+
+- name: Download Tomcat
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz dest=/opt/apache-tomcat-8.0.33.tar.gz
+
+- name: Extract archive
+  command: chdir=/usr/share /bin/tar xvf /opt/apache-tomcat-8.0.33.tar.gz -C /opt/ creates=/opt/apache-tomcat-8.0.33
+
+- name: Symlink install directory
+  file: src=/opt/apache-tomcat-8.0.33 path=/usr/share/tomcat state=link
+
+- name: Change ownership of Tomcat installation
+  file: path=/usr/share/tomcat/ owner=tomcat group=tomcat state=directory recurse=yes
+
+- name: Configure Tomcat server
+  template: src=server.xml dest=/usr/share/tomcat/conf/server.xml
+  notify: restart tomcat
+
+- name: Configure Tomcat users
+  template: src=tomcat-users.xml dest=/usr/share/tomcat/conf/tomcat-users.xml
+  notify: restart tomcat
+
+- name: Install Tomcat init script
+  copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+
+- name: Install Tomcat environment variables script
+  copy: src=setenv.sh dest=/usr/share/tomcat/bin/setenv.sh mode=0755
+
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes
+
+- name: Open ajp port[iptables]
+  iptables: chain=INPUT protocol=tcp match=tcp destination_port=8009 ctstate=NEW jump=ACCEPT
+  notify: restart iptables
+
+- name: wait for tomcat to start
+  wait_for: port=8009

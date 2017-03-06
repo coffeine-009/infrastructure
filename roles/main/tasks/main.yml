@@ -1,0 +1,14 @@
+---
+# Prepare front-end server[balancer] #
+
+#- Install web-servers -#
+- include: httpd.yml
+
+#- Configure access -#
+- include: permissions.yml
+
+#- Install app's dependencies -#
+- include: app-tools.yml
+
+#- Deploy application -#
+- include: deploy.yml

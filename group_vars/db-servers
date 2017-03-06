@@ -1,0 +1,5 @@
+---
+# Variables for database servers
+db_name: virtuoso
+db_username: virtuoso
+db_password: virtuoso

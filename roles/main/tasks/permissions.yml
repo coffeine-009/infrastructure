@@ -1,0 +1,10 @@
+#- Set mode for base dir -#
+- name: Set permissions
+  file: path=/var/www/html
+        state=directory
+        group=apache
+        mode=0775
+        recurse=yes
+
+# Create a SSH key for user[.ssh/id_rsa]
+- user: name=vitaliy.tsutsman generate_ssh_key=yes ssh_key_bits=4096 ssh_key_file=.ssh/id_rsa groups=apache append=yes
