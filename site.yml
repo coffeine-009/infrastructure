@@ -1,33 +1,44 @@
 ---
 #- Deploy application -#
 #- Prepare all nodes -#
-- name: Apply common configuration to all nodes
-  hosts: all
-  remote_user: vitaliy.tsutsman
-
-  roles:
-    - { role: common, when: "ansible_os_family == 'RedHat'" }
+#- name: Apply common configuration to all nodes
+#  hosts: all
+#  remote_user: vitaliy.tsutsman
+#
+#  roles:
+#    - { role: common, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all main -#
-- name: Apply configuration to main server
-  hosts: main-servers
-  remote_user: vitaliy.tsutsman
-
-  roles:
-    - { role: main, when: "ansible_os_family == 'RedHat'" }
+#- name: Apply configuration to main server
+#  hosts: main-servers
+#  remote_user: vitaliy.tsutsman
+#
+#  roles:
+#    - { role: main, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all database servers -#
-- name: Apply configuration to database servers
-  hosts: db-servers
-  remote_user: vitaliy.tsutsman
-
-  roles:
-    - { role: db, when: "ansible_os_family == 'RedHat'" }
+#- name: Apply configuration to database servers
+#  hosts: db-servers
+#  remote_user: vitaliy.tsutsman
+#
+#  roles:
+#    - { role: db, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all back-end servers -#
-- name: Apply configuration to back-end servers
-  hosts: music-servers
-  remote_user: vitaliy.tsutsman
+#- name: Apply configuration to back-end servers
+#  hosts: music-servers
+#  remote_user: vitaliy.tsutsman
+#
+#  roles:
+#    - { role: music, when: "ansible_os_family == 'RedHat'" }
 
+#- CI -#
+#- Jenkins -#
+- name: Jenkins setup
+  hosts: ci-jenkins-servers
+  remote_user: vitaliy.tsutsman
+  vars:
+    jenkins_host_name: 192.168.3.9
   roles:
-    - { role: music, when: "ansible_os_family == 'RedHat'" }
+    - role: geerlingguy.jenkins
+
