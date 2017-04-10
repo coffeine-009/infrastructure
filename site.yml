@@ -1,20 +1,28 @@
 ---
 #- Deploy application -#
 #- Prepare all nodes -#
-#- name: Apply common configuration to all nodes
-#  hosts: all
-#  remote_user: vitaliy.tsutsman
-#
-#  roles:
-#    - { role: common, when: "ansible_os_family == 'RedHat'" }
+- name: Apply common configuration to all nodes
+  hosts: all
+  remote_user: vitaliy.tsutsman
+
+  roles:
+    - { role: common, when: "ansible_os_family == 'RedHat'" }
+
+#- Docker setup -#
+- name: Setup docker
+  hosts: docker
+  remote_user: vitaliy.tsutsman
+  roles:
+    - role: docker
+      when: "ansible_os_family == 'RedHat'"
 
 #- Prepare all main -#
-#- name: Apply configuration to main server
-#  hosts: main-servers
-#  remote_user: vitaliy.tsutsman
-#
-#  roles:
-#    - { role: main, when: "ansible_os_family == 'RedHat'" }
+- name: Apply configuration to main server
+  hosts: main-servers
+  remote_user: vitaliy.tsutsman
+
+  roles:
+    - { role: main, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all database servers -#
 #- name: Apply configuration to database servers

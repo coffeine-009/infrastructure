@@ -1,0 +1,10 @@
+#- Open http port -#
+- name: Open web-server port[iptables]
+  iptables: chain=INPUT protocol=tcp match=tcp destination_port=80 ctstate=NEW jump=ACCEPT
+  notify: restart iptables
+
+#- Open http ports -#
+- name: Open web-server port[iptables]
+  iptables: chain=INPUT protocol=tcp match=tcp destination_port=443 ctstate=NEW jump=ACCEPT
+  notify: restart iptables
+
