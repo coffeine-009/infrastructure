@@ -16,13 +16,20 @@
     - role: docker
       when: "ansible_os_family == 'RedHat'"
 
-#- Prepare all main -#
-- name: Apply configuration to main server
-  hosts: main-servers
+- name: Setup ci servers
+  hosts: ci-servers
   remote_user: vitaliy.tsutsman
-
   roles:
-    - { role: main, when: "ansible_os_family == 'RedHat'" }
+    - role: ci
+      when: "ansible_os_family == 'RedHat'"
+
+#- Prepare all main -#
+#- name: Apply configuration to main server
+#  hosts: main-servers
+#  remote_user: vitaliy.tsutsman
+#
+#  roles:
+#    - { role: main, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all database servers -#
 #- name: Apply configuration to database servers
@@ -43,10 +50,10 @@
 #- CI -#
 #- Jenkins -#
 - name: Jenkins setup
-  hosts: ci-jenkins-servers
+  hosts: ci-servers
   remote_user: vitaliy.tsutsman
   vars:
-    jenkins_host_name: 192.168.3.9
+    jenkins_host_name: 192.168.3.128:8080
   roles:
     - role: geerlingguy.jenkins
 

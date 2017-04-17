@@ -1,8 +1,6 @@
 ---
 # Base software for each node
 
-#- Install docker -#
-#- include: docker.yml
-
+#- Install ci plugins -#
 - include: plugins.yml
 

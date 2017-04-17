@@ -1,7 +1,7 @@
 [docker:children]
-main-servers
-music-servers
-ci-jenkins-servers
+#main-servers
+#music-servers
+ci-servers
 
 [main-servers]
 www.musician-virtuoso.com
@@ -12,6 +12,6 @@ www.musician-virtuoso.com
 [music-servers]
 www.musician-virtuoso.com
 
-[ci-jenkins-servers]
+[ci-servers]
 192.168.3.128
 

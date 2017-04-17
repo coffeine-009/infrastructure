@@ -1,0 +1,5 @@
+my_jenkins_params:
+  url_username: admin
+  url_password: admin
+  url: http://192.168.3.128:8080
+

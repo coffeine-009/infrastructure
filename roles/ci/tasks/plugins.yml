@@ -1,0 +1,12 @@
+---
+#- Plugins -#
+
+- name: Install Docker pipeline plugin
+  jenkins_plugin:
+    name: docker-workflow
+    state: latest
+    params: "{{ my_jenkins_params }}"
+  become: true
+  become_method: su
+  become_user: root
+
