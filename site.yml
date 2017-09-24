@@ -32,12 +32,11 @@
 #    - { role: main, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all database servers -#
-#- name: Apply configuration to database servers
-#  hosts: db-servers
-#  remote_user: vitaliy.tsutsman
-#
-#  roles:
-#    - { role: db, when: "ansible_os_family == 'RedHat'" }
+- name: Apply configuration to database servers
+  hosts: db-servers
+  remote_user: vitaliy.tsutsman
+  roles:
+    - { role: db, when: "ansible_os_family == 'RedHat'" }
 
 #- Prepare all back-end servers -#
 #- name: Apply configuration to back-end servers
